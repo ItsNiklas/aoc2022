@@ -153,7 +153,7 @@ def submit_answer(part, answer):
 	return False
 
 URL       = 'https://adventofcode.com/{:d}/day/{:d}/{:s}'
-SESSION   = ''
+SESSION   = os.environ['SESSION']
 CACHE_DIR = '../inputs/'
 YEAR      = -1
 DAY       = -1
