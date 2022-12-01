@@ -1,7 +1,7 @@
 import os
 import sys
 import re
-from importlib import find_loader
+from importlib import util
 from datetime import datetime, timedelta
 from time import sleep
 
@@ -155,7 +155,7 @@ SESSION   = os.environ['SESSION']
 CACHE_DIR = '../inputs/'
 YEAR      = -1
 DAY       = -1
-REQUESTS  = find_loader('requests')
+REQUESTS  = util.find_spec('requests')
 
 if REQUESTS:
 	import requests
