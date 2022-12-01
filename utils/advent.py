@@ -50,10 +50,8 @@ def setup(year, day):
 	YEAR = year
 	DAY  = day
 
-	if REQUESTS and os.path.isfile('secret_session_cookie'):
-		with open('secret_session_cookie') as f:
-			SESSION = f.read().rstrip()
-			S.cookies.set('session', SESSION)
+	if REQUESTS:
+		S.cookies.set('session', SESSION)
 
 def get_input(fname=None, mode='r'):
 	check_setup_once()
@@ -91,7 +89,7 @@ def get_input(fname=None, mode='r'):
 
 	logcont('downloading... ')
 
-	r = S.get(URL.format(YEAR, DAY, 'input'))
+	r = S.get(URL.format(YEAR, DAY, 'input'), headers=UA)
 	check_or_die(r)
 
 	with open(fname, 'wb') as f:
@@ -115,7 +113,7 @@ def submit_answer(part, answer):
 
 	log('Submitting day {} part {} answer: {}\n', DAY, part, answer)
 
-	r = S.post(URL.format(YEAR, DAY, 'answer'), data={'level': part, 'answer': answer})
+	r = S.post(URL.format(YEAR, DAY, 'answer'), data={'level': part, 'answer': answer}, headers=UA)
 	check_or_die(r)
 	t = r.text.lower()
 
@@ -133,7 +131,7 @@ def submit_answer(part, answer):
 		if DAY == 25 and part == 1:
 			log("It's Christmas! Automatically submitting second part in 5s...\n")
 			sleep(5)
-			S.post(URL.format(YEAR, 25, 'answer'), data={'level': 2, 'answer': 0})
+			S.post(URL.format(YEAR, 25, 'answer'), data={'level': 2, 'answer': 0}, headers=UA)
 			logcont('done!\n')
 			log('Go check it out: https://adventofcode.com/{}/day/25#part2\n', YEAR)
 
@@ -162,3 +160,4 @@ REQUESTS  = find_loader('requests')
 if REQUESTS:
 	import requests
 	S = requests.Session()
+	UA = {'User-Agent' : 'github.com/ItsNiklas/aoc2022 by nikbau2000@gmail.com'}
