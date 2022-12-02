@@ -104,6 +104,7 @@ def print_answer(part, answer):
 	print('Part {}:'.format(part), answer)
 
 def submit_answer(part, answer):
+	if 'debug' in sys.argv: return
 	check_setup_once()
 
 	if not REQUESTS:
