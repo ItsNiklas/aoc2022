@@ -10,12 +10,12 @@ My solutions for [Advent of Code](https://adventofcode.com/2022) in 2022. Probab
   2022 - 6 ⭐
 </h1>
 <a href="solutions/day01.py">
-  <img src="AoCTiles/Media/2022/01.png" width="161px">
+  <img src="Media/2022/01.png" width="161px">
 </a>
 <a href="solutions/day02.py">
-  <img src="AoCTiles/Media/2022/02.png" width="161px">
+  <img src="Media/2022/02.png" width="161px">
 </a>
 <a href="solutions/day03.py">
-  <img src="AoCTiles/Media/2022/03.png" width="161px">
+  <img src="Media/2022/03.png" width="161px">
 </a>
 <!-- AOC TILES END -->

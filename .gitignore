@@ -1,3 +1,6 @@
+# LiquidFun/adventofcode/AoCTiles
+AoCTiles/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -26,8 +29,6 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-.aoc_tiles_cache/
-fonts/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
