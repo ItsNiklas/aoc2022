@@ -18,4 +18,7 @@ My solutions for [Advent of Code](https://adventofcode.com/2022) in 2022. Probab
 <a href="solutions/day03.py">
   <img src="Media/2022/03.png" width="161px">
 </a>
+<a href="solutions/day04.py">
+  <img src="Media/2022/04.png" width="161px">
+</a>
 <!-- AOC TILES END -->
