@@ -10,7 +10,7 @@ fd = advent.get_input()
 
 in1, in2 = map(lambda s: s.splitlines(), fd.read().rstrip().split("\n\n"))
 
-number_stacks = max(map(int, re.findall(r"(\d+)", in1[-1])))
+number_stacks = (len(in1[-1])-3) // 4 + 1
 stacks = [deque() for _ in range(number_stacks)]
 
 for line in reversed(in1[:-1]):
