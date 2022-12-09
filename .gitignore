@@ -1,6 +1,9 @@
 # LiquidFun/adventofcode/AoCTiles
 AoCTiles/
 
+# AoC
+inputs/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

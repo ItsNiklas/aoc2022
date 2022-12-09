@@ -161,4 +161,4 @@ REQUESTS  = util.find_spec('requests')
 if REQUESTS:
 	import requests
 	S = requests.Session()
-	UA = {'User-Agent' : 'github.com/ItsNiklas/aoc2022 by nikbau2000@gmail.com'}
+	UA = {'User-Agent' : 'github.com/ItsNiklas/aoc2022 by @ItsNiklass'}
