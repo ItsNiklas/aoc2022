@@ -91,7 +91,7 @@ def dump_char_matrix(mat, transpose=False):
 
 	sys.stderr.flush()
 
-def dump_sparse_matrix(mat, chars='# ', transpose=False, header=False):
+def dump_sparse_matrix(mat, chars='#.', transpose=True, header=False):
 	'''Dump the contents of a sparse matrix (e.g. a set or a dict, where the key
 	is the coordinates of a cell in the matrix) to standard error.
 
