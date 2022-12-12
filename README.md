@@ -1,12 +1,12 @@
 # Advent of Code
 My solutions for [Advent of Code](https://adventofcode.com/2022) in 2022. Probably done mostly in Python 3.11 🐍.
 
-- `solutions/` contain the source files to solve the problem, one for each day.
+- `solutions/` contain the source files to solve the problem, one for each day. Ideally executable to print both results. Keep in mind they are _cleaned_ solutions.
 - `utils/` hande logging, caching, helping, submitting and are cloned from the amazing [mebeim/aoc/utils/](https://github.com/mebeim/aoc/tree/master/utils). Licensed under the Apache License 2.0.
 
 <!-- AOC TILES BEGIN -->
 <h1 align="center">
-  2022 - 22 ⭐
+  2022 - 24 ⭐
 </h1>
 <a href="solutions/day01.py">
   <img src="Media/2022/01.png" width="161px">
@@ -40,5 +40,8 @@ My solutions for [Advent of Code](https://adventofcode.com/2022) in 2022. Probab
 </a>
 <a href="solutions/day11.py">
   <img src="Media/2022/11.png" width="161px">
+</a>
+<a href="solutions/day12.py">
+  <img src="Media/2022/12.png" width="161px">
 </a>
 <!-- AOC TILES END -->
