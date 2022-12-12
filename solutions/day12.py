@@ -14,15 +14,17 @@ start = next(complex(i, line.index('S')) for i, line in enumerate(input) if 'S' 
 goal = next(complex(i, line.index('E')) for i, line in enumerate(input) if 'E' in line)
 
 
-def dijkstra(source: complex, destination: complex):
+def dijkstra(source: complex, destination: str, reverse: bool = False):
     @functools.cache
     def h(vertex: complex):  # Height
-        if not (0 <= vertex.real < N and 0 <= vertex.imag < M): return 999
+        if not (0 <= vertex.real < N and 0 <= vertex.imag < M):  # Out of bounds
+            return float('-inf' if reverse else 'inf')
         if vertex == start: return ord('a')
         if vertex == goal: return ord('z')
         return ord(input[int(vertex.real)][int(vertex.imag)])
 
     def neighbors(v: complex):
+        if reverse: return filter(lambda n: h(n) >= h(v) - 1, [v + 1, v - 1, v + 1j, v - 1j])
         return filter(lambda n: h(v) + 1 >= h(n), [v + 1, v - 1, v + 1j, v - 1j])
 
     # Store the distances from the source node to all other nodes
@@ -36,7 +38,8 @@ def dijkstra(source: complex, destination: complex):
         distance, node = heappop(queue)
         node = complex(node)
         # Stop if we have reached the destination node
-        if node == destination: break
+        if input[int(node.real)][int(node.imag)] == destination:
+            return distance
 
         # Update the distances of the node's neighbors
         for neighbor in neighbors(node):
@@ -45,10 +48,6 @@ def dijkstra(source: complex, destination: complex):
                 distances[neighbor] = new_distance
                 heappush(queue, (new_distance, str(neighbor)))
 
-    return distances[destination]
 
-
-advent.print_answer(1, dijkstra(start, goal))
-
-starts = (complex(i, line.index('a')) for i, line in enumerate(input) if 'a' in line)
-advent.print_answer(2, min(dijkstra(start, goal) for start in starts))
+advent.print_answer(1, dijkstra(start, 'E'))
+advent.print_answer(2, dijkstra(goal, 'a', True))
