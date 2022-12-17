@@ -6,7 +6,7 @@ My solutions for [Advent of Code](https://adventofcode.com/2022) in 2022. Probab
 
 <!-- AOC TILES BEGIN -->
 <h1 align="center">
-  2022 - 31 ⭐
+  2022 - 32 ⭐
 </h1>
 <a href="solutions/day01.py">
   <img src="Media/2022/01.png" width="161px">
@@ -55,5 +55,8 @@ My solutions for [Advent of Code](https://adventofcode.com/2022) in 2022. Probab
 </a>
 <a href="solutions/day16.py">
   <img src="Media/2022/16.png" width="161px">
+</a>
+<a href="solutions/day17.py">
+  <img src="Media/2022/17.png" width="161px">
 </a>
 <!-- AOC TILES END -->
