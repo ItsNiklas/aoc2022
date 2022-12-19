@@ -27,8 +27,10 @@ class Blueprint:
 input: list[Blueprint] = []
 
 for line in fd:
-    l = list(map(int, re.findall(r'(\d+)', line)))
+    l = list(map(int, re.findall(r"(\d+)", line)))
     input.append(Blueprint(l[0], l[1], l[2], (l[3], l[4]), (l[5], l[6])))
+
+quality_sum = 0
 
 for b in input:
     m_print = 100
@@ -37,17 +39,22 @@ for b in input:
     # minutes, ore_r, ore, clay_r, clay, obs_r, obs, geo_r, geo
     start = (24, 1, 0, 0, 0, 0, 0, 0, 0)
     q = deque([start])
+    latest_record = 0
+
     while q:
         minutes, ore_r, ore, clay_r, clay, obs_r, obs, geo_r, geo = q.popleft()
 
-        # if minutes < m_print:
-        #    print(25 - minutes, '|' , ore_r, ore, clay_r, clay, obs_r, obs, geo_r, geo, '|', len(q))
-        #    m_print = minutes
-
-        print(25 - minutes, '|', ore_r, ore, clay_r, clay, obs_r, obs, geo_r, geo, '|', len(q))
+        if minutes < m_print:
+            latest_record = max((geo for _, _, _, _, _, _, _, _, geo in q), default=0)
+            # print("\t", 25 - minutes, "|", latest_record, "|", len(q))
+            m_print = minutes
 
         if minutes == 0:
             break
+
+        # Prune (really agressive)
+        if geo < latest_record - 1:
+            continue
 
         # simulate 1 minute
         ore_new = ore + ore_r
@@ -58,28 +65,97 @@ for b in input:
 
         # Choices based on B:
         if ore >= b.ore_robot_cost:  # Build ore robot
-            if max([b.ore_robot_cost, b.clay_robot_cost, b.obsidian_robot_cost[0],
-                    b.geode_robot_cost[0]]) > ore_r:  # Do we need more?
-                n = (minutes, ore_r + 1, ore_new - b.ore_robot_cost, clay_r, clay_new, obs_r, obs_new, geo_r, geo_new)
+            if (
+                max(
+                    [
+                        b.ore_robot_cost,
+                        b.clay_robot_cost,
+                        b.obsidian_robot_cost[0],
+                        b.geode_robot_cost[0],
+                    ]
+                )
+                > ore_r
+            ):  # Do we need more?
+                n = (
+                    minutes,
+                    ore_r + 1,
+                    ore_new - b.ore_robot_cost,
+                    clay_r,
+                    clay_new,
+                    obs_r,
+                    obs_new,
+                    geo_r,
+                    geo_new,
+                )
                 q.append(n)
 
         if ore >= b.clay_robot_cost:  # Build clay robot
             if b.obsidian_robot_cost[1] > clay_r:  # Do we need more?
-                n = (minutes, ore_r, ore_new - b.clay_robot_cost, clay_r + 1, clay_new, obs_r, obs_new, geo_r, geo_new)
+                n = (
+                    minutes,
+                    ore_r,
+                    ore_new - b.clay_robot_cost,
+                    clay_r + 1,
+                    clay_new,
+                    obs_r,
+                    obs_new,
+                    geo_r,
+                    geo_new,
+                )
                 q.append(n)
 
-        if all(i >= j for i, j in zip((ore, clay), b.obsidian_robot_cost)):  # Build obsidian robot
+        if all(
+            i >= j for i, j in zip((ore, clay), b.obsidian_robot_cost)
+        ):  # Build obsidian robot
             if b.geode_robot_cost[1] > obs_r:  # Do we need more?
-                n = (minutes, ore_r, ore_new - b.obsidian_robot_cost[0], clay_r, clay_new - b.obsidian_robot_cost[1],
-                     obs_r + 1, obs_new, geo_r, geo_new)
+                n = (
+                    minutes,
+                    ore_r,
+                    ore_new - b.obsidian_robot_cost[0],
+                    clay_r,
+                    clay_new - b.obsidian_robot_cost[1],
+                    obs_r + 1,
+                    obs_new,
+                    geo_r,
+                    geo_new,
+                )
                 q.append(n)
 
-        if all(i >= j for i, j in zip((ore, obs), b.geode_robot_cost)):  # Build geode robot
-            q.append((minutes, ore_r, ore_new - b.geode_robot_cost[0], clay_r, clay_new, obs_r,
-                      obs_new - b.geode_robot_cost[1], geo_r + 1, geo_new))
+        if all(
+            i >= j for i, j in zip((ore, obs), b.geode_robot_cost)
+        ):  # Build geode robot
+            q.append(
+                (
+                    minutes,
+                    ore_r,
+                    ore_new - b.geode_robot_cost[0],
+                    clay_r,
+                    clay_new,
+                    obs_r,
+                    obs_new - b.geode_robot_cost[1],
+                    geo_r + 1,
+                    geo_new,
+                )
+            )
 
         # Build nothing
-        if len(q) == 0:
-            q.append((minutes, ore_r, ore_new, clay_r, clay_new, obs_r, obs_new, geo_r, geo_new))
+        if ore_new <= 5:
+            q.append(
+                (
+                    minutes,
+                    ore_r,
+                    ore_new,
+                    clay_r,
+                    clay_new,
+                    obs_r,
+                    obs_new,
+                    geo_r,
+                    geo_new,
+                )
+            )
 
-    print(max(geo for minutes, ore_r, ore, clay_r, clay, obs_r, obs, geo_r, geo in q))
+    # print(f"{b.id}:", max(geo for _, _, _, _, _, _, _, _, geo in q))
+    quality_sum += b.id * max(geo for _, _, _, _, _, _, _, _, geo in q)
+
+
+advent.print_answer(1, quality_sum)
